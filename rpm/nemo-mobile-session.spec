@@ -1,3 +1,9 @@
+%define _oneshot_requires_post Requires(post): /usr/bin/getent, /bin/ln, /bin/touch, /bin/sed, /bin/grep, /etc/login.defs, /usr/bin/add-oneshot
+%define _oneshot_requires_pre  Requires(pre): /usr/bin/getent, /usr/sbin/groupadd
+%define _oneshot_groupadd_requires_pre %_oneshot_requires_pre
+%define _oneshot_groupadd_requires_post %_oneshot_requires_post, /usr/sbin/groupadd, /usr/bin/groupadd-user
+%define _oneshotdir %{_libdir}/oneshot.d
+
 Name:       nemo-mobile-session
 Summary:    Target for nemo systemd user session
 Version:    13
@@ -6,6 +12,14 @@ Group:      System/Libraries
 License:    Public Domain
 URL:        https://github.com/nemomobile/nemo-mobile-session
 Source0:    %{name}-%{version}.tar.gz
+
+%description
+Target for nemo systemd user session
+
+%package common 
+Summary:    Nemo-mobile-session configs files shared by both xorg and wayland
+Group:      Configs
+Provides:   nemo-mobile-session-common
 Requires:   systemd >= 187
 Requires:   systemd-user-session-targets
 Obsoletes:  uxlaunch
@@ -16,15 +30,6 @@ Requires: oneshot
 %{_oneshot_requires_post}
 Requires(post): /bin/chgrp, /usr/sbin/groupmod
 
-%description
-Target for nemo systemd user session
-
-%package common 
-Summary:    Nemo-mobile-session configs files shared by both xorg and wayland
-Group:      Configs
-Provides:   nemo-mobile-session-common
-Conflicts:  nemo-mobile-session <= 21-14
-
 %description common
 %{summary}
  
@@ -34,13 +39,10 @@ Group:      Configs
 Provides:   nemo-mobile-session-xorg    
 Requires:   xorg-launch-helper
 Requires:   nemo-mobile-session-common
-Provides:   nemo-mobile-session > 21-14
-Obsoletes:  nemo-mobile-session <= 21-14
+Provides:   nemo-mobile-session > 21
+Obsoletes:  nemo-mobile-session <= 21
 Conflicts:  nemo-mobile-session-wayland
-<<<<<<< HEAD
 
-=======
->>>>>>> [packaging] Add -common subpackage
 %description xorg   
 %{summary}
 
