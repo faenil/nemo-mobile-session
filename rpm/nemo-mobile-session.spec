@@ -1,3 +1,9 @@
+%define _oneshot_requires_post Requires(post): /usr/bin/getent, /bin/ln, /bin/touch, /bin/sed, /bin/grep, /etc/login.defs, /usr/bin/add-oneshot
+%define _oneshot_requires_pre  Requires(pre): /usr/bin/getent, /usr/sbin/groupadd
+%define _oneshot_groupadd_requires_pre %_oneshot_requires_pre
+%define _oneshot_groupadd_requires_post %_oneshot_requires_post, /usr/sbin/groupadd, /usr/bin/groupadd-user
+%define _oneshotdir %{_libdir}/oneshot.d
+
 Name:       nemo-mobile-session
 Summary:    Target for nemo systemd user session
 Version:    13
@@ -37,10 +43,7 @@ Requires:   nemo-mobile-session-common
 Provides:   nemo-mobile-session > 21-14
 Obsoletes:  nemo-mobile-session <= 21-14
 Conflicts:  nemo-mobile-session-wayland
-<<<<<<< HEAD
 
-=======
->>>>>>> [packaging] Add -common subpackage
 %description xorg   
 %{summary}
 
