@@ -19,15 +19,25 @@ Requires(post): /bin/chgrp, /usr/sbin/groupmod
 %description
 Target for nemo systemd user session
 
+%package common 
+Summary:    Nemo-mobile-session configs files shared by both xorg and wayland
+Group:      Configs
+Provides:   nemo-mobile-session-common
+Conflicts:  nemo-mobile-session <= 21-14
 
+%description common
+%{summary}
+ 
 %package xorg
 Summary:    Xorg configs for nemo-mobile-session
 Group:      Configs
 Provides:   nemo-mobile-session-xorg    
 Requires:   xorg-launch-helper
-Requires:   nemo-mobile-session
+Requires:   nemo-mobile-session-common
+Provides:   nemo-mobile-session > 21-14
+Obsoletes:  nemo-mobile-session <= 21-14
 Conflicts:  nemo-mobile-session-wayland
-Obsoletes:  nemo-mobile-session <= 21
+
 %description xorg   
 %{summary}
 
@@ -35,7 +45,7 @@ Obsoletes:  nemo-mobile-session <= 21
 Summary:    Wayland configs for nemo-mobile-session
 Group:      Configs
 Provides:   nemo-mobile-session-wayland
-Requires:   nemo-mobile-session
+Requires:   nemo-mobile-session-common
 Conflicts:  nemo-mobile-session-xorg
 
 %description wayland
@@ -103,7 +113,7 @@ if [ $1 -gt 1 ] ; then
 
 fi
 
-%files
+%files common
 %defattr(-,root,root,-)
 %config /var/lib/environment/nemo/50-nemo-mobile-ui.conf
 %{_libdir}/tmpfiles.d/nemo-session-tmp.conf
