@@ -37,7 +37,10 @@ Requires:   nemo-mobile-session-common
 Provides:   nemo-mobile-session > 21
 Obsoletes:  nemo-mobile-session <= 21
 Conflicts:  nemo-mobile-session-wayland
+<<<<<<< HEAD
 
+=======
+>>>>>>> [packaging] Add -common subpackage
 %description xorg   
 %{summary}
 
